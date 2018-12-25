@@ -43387,6 +43387,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -43430,36 +43434,50 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", [_vm._v("Меню")]),
-      _vm._v(" "),
+  return _c("div", [
+    _c("h2", [_vm._v("Меню")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
       _vm._l(_vm.menus, function(men) {
-        return _c("div", { key: men.id, staticClass: "card card-body mb-2" }, [
-          _c("h3", [_vm._v(_vm._s(men.title))]),
-          _vm._v(" "),
-          _c("p", { staticClass: "display-4" }, [
-            _vm._v(_vm._s(men.price) + " тг")
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-warning mb-2",
-              on: {
-                click: function($event) {
-                  _vm.postOrder(men.id)
-                }
-              }
-            },
-            [_vm._v("Заказать")]
-          )
-        ])
-      })
-    ],
-    2
-  )
+        return _c(
+          "div",
+          { key: men.id, staticClass: "card card-body mb-2 col-md-3 mr-2" },
+          [
+            _c("h3", [_vm._v(_vm._s(men.title))]),
+            _vm._v(" "),
+            _c("p", { staticClass: "display-4" }, [
+              _vm._v(_vm._s(men.price) + " тг")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticStyle: {
+                transform: "scale(1.3)",
+                opacity: "0.9",
+                cursor: "pointer"
+              },
+              attrs: { type: "checkbox", id: men.id }
+            })
+          ]
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-warning mb-2",
+        on: {
+          click: function($event) {
+            _vm.postOrder(_vm.men.id)
+          }
+        }
+      },
+      [_vm._v("Заказать")]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
