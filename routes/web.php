@@ -20,4 +20,5 @@ Route::get('/', function () {
 // });
 
 Route::get('/drop', 'DropController@index');
+Route::post('/order', 'MenuController@postOrder');
 

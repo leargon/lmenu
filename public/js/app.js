@@ -43401,7 +43401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         title: '',
         price: ''
       },
-      men_id: '',
+      men_id: [],
       pagination: {},
       edit: false
     };
@@ -43420,8 +43420,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.menus = res.data;
       });
     },
-    postOrder: function postOrder(id) {
-      fetch('/api/menu/order/' + id).then(alert('Заказ сделан ' + id));
+    postOrder: function postOrder() {
+      var request = {
+        orders: this.men_id
+      };
+      // fetch(`/api/menu/order/${id}`)
+      // 	.then(alert('Заказ сделан '+ id));
+      axios.post('/order', request).then(alert('Заказ сделан '));
     }
   }
 });
@@ -43452,12 +43457,47 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.men_id,
+                  expression: "men_id"
+                }
+              ],
               staticStyle: {
                 transform: "scale(1.3)",
                 opacity: "0.9",
                 cursor: "pointer"
               },
-              attrs: { type: "checkbox", id: men.id }
+              attrs: { type: "checkbox" },
+              domProps: {
+                value: men.id,
+                checked: Array.isArray(_vm.men_id)
+                  ? _vm._i(_vm.men_id, men.id) > -1
+                  : _vm.men_id
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.men_id,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = men.id,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.men_id = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.men_id = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.men_id = $$c
+                  }
+                }
+              }
             })
           ]
         )
@@ -43471,7 +43511,7 @@ var render = function() {
         staticClass: "btn btn-warning mb-2",
         on: {
           click: function($event) {
-            _vm.postOrder(_vm.men.id)
+            _vm.postOrder()
           }
         }
       },

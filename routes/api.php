@@ -24,4 +24,6 @@ Route::get('menu', 'MenuController@index');
 Route::get('menu/{id}', 'MenuController@show');
 
 // Create an order in dropbox
-Route::get('menu/order/{id}', 'MenuController@postOrder');
+// Route::get('menu/order/{id}', 'MenuController@postOrder');
+
+// Route::get('menu/order', 'MenuController@postOrder');

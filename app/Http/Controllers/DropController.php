@@ -15,4 +15,10 @@ class DropController extends Controller
         Storage::disk('dropbox')->put('file.txt', 'Hello laravel ');
         return $menu;
     }
+
+    public function show()
+    {
+    	$test = 'Test';
+    	return $test;
+    }
 }

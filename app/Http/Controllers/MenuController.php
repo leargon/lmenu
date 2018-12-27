@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Menu;
 use App\Http\Resources\Menu as MenuResource;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class MenuController extends Controller
 {
@@ -61,10 +62,28 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function postOrder($id)
+    public function postOrder(Request $request)
     {
-        $menu_item = Menu::findOrFail($id);
-        Storage::disk('dropbox')->put('order'.$menu_item['id'].'.txt', 'Товар: '.$menu_item['title'].' Цена: '.$menu_item['price']);
+        $orders = [];
+        $str = '';
+        foreach ($request->orders as $key => $value) {
+            $id = $value;
+            $menu_item = Menu::findOrFail($id);
+            // Storage::disk('dropbox')->put('order'.$menu_item['id'].'.txt', 'Товар: '.$menu_item['title'].' Цена: '.$menu_item['price']);
+            $orders[] = $menu_item;
+        }
 
+        foreach ($orders as $key => $value) {
+            $str .= 'Позиция '.$value['id'].": \r\n"
+                    .$value['title']."\r\nЦена: "
+                    .$value['price']." \r\n\r\n"
+                    ;
+        }
+        $current_time = Carbon::now()->toDateTimeString();
+
+        Storage::disk('dropbox')->put('order_'.$current_time.'.txt', $str);
+
+        // $menu_item = Menu::findOrFail($id);
+        //Storage::disk('dropbox')->put('order'.$menu_item['id'].'.txt', 'Товар: '.$menu_item['title'].' Цена: '.$menu_item['price']);
     }
 }
